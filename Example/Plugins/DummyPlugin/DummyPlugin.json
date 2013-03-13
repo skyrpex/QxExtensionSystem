@@ -1,0 +1,7 @@
+{
+    "name": "DummyPlugin",
+    "version": "0.0.1",
+    "dependencies": [
+        {"name": "ShitPlugin", "version": "0.0.1"}
+    ]
+}
