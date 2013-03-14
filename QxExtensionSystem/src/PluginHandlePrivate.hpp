@@ -21,6 +21,11 @@ public:
     QString version;
     QList<PluginDependency> dependencies;
     QPluginLoader loader;
+
+private:
+    static QRegExp &versionRegExp();
+    static bool isValidVersion(const QString &version);
+    static int versionCompare(const QString &version1, const QString &version2);
 };
 
 #endif // PLUGINHANDLEPRIVATE_HPP
