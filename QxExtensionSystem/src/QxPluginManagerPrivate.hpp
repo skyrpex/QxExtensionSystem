@@ -26,6 +26,7 @@ private:
     PluginHandleList m_handles;
     PluginHandleList m_loadQueue;
     PluginHandleList m_noDependenciesQueue;
+    QList<QxPlugin *> m_plugins;
 };
 
 #endif // QXPLUGINMANAGERPRIVATE_HPP

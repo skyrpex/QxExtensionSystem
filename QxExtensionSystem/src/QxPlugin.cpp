@@ -22,3 +22,8 @@ void QxPlugin::addAutoReleasedObject(QObject *object)
     d->pool->append(object);
     d->autoReleasePool.prepend(object);
 }
+
+void QxPlugin::removeObject(QObject *object)
+{
+    d->pool->removeOne(object);
+}

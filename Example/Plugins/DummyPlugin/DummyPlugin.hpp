@@ -14,4 +14,5 @@ public:
    ~DummyPlugin() {}
 
     void initialize();
+    void uninitialize();
 };

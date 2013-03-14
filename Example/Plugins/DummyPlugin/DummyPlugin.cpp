@@ -4,11 +4,13 @@
 
 void DummyPlugin::initialize()
 {
-    qDebug() << __FUNCTION__ << this;
-
     QWidget *widget = new QWidget;
     widget->show();
     addAutoReleasedObject(widget);
+}
+
+void DummyPlugin::uninitialize()
+{
 }
 
 Q_PLUGIN_METADATA(IID "QxPlugin")

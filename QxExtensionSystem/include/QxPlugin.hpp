@@ -18,9 +18,11 @@ public:
     virtual ~QxPlugin();
 
     virtual void initialize() = 0;
+    virtual void uninitialize() = 0;
 
     void addObject(QObject *object);
     void addAutoReleasedObject(QObject *object);
+    void removeObject(QObject *object);
 
 private:
     friend class QxPluginManagerPrivate;

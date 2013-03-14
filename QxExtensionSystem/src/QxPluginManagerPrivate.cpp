@@ -13,7 +13,7 @@ QxPluginManagerPrivate::QxPluginManagerPrivate()
 
 QxPluginManagerPrivate::~QxPluginManagerPrivate()
 {
-    qDeleteAll(m_handles);
+    unloadPlugins();
 }
 
 QList<QxPlugin *> QxPluginManagerPrivate::loadPlugins(const QString &path)
@@ -23,25 +23,33 @@ QList<QxPlugin *> QxPluginManagerPrivate::loadPlugins(const QString &path)
     loadHandles(path);
     loadQueue();
 
-    QList<QxPlugin *> plugins;
     foreach(PluginHandle *handle, m_loadQueue) {
         QxPlugin *plugin = handle->plugin();
-        if(!plugins.contains(plugin)) {
-            plugins << plugin;
+        if(!m_plugins.contains(plugin)) {
+            m_plugins << plugin;
 
             plugin->d->pool = &m_pool;
             plugin->initialize();
         }
     }
-    return plugins;
+    return m_plugins;
 }
 
 void QxPluginManagerPrivate::unloadPlugins()
 {
+    foreach(QxPlugin *plugin, m_plugins) {
+        plugin->uninitialize();
+    }
+
+    if(!m_pool.isEmpty()) {
+        qWarning() << m_pool.count() << "object(s) left in the pool";
+    }
+
     qDeleteAll(m_handles);
     m_handles.clear();
     m_loadQueue.clear();
     m_noDependenciesQueue.clear();
+    m_plugins.clear();
 }
 
 void QxPluginManagerPrivate::loadHandles(const QString &path)

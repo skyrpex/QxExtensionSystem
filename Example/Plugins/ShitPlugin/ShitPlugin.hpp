@@ -1,7 +1,8 @@
 #pragma once
 
 #include <QxPlugin.hpp>
-#include <QDebug>
+
+class QWidget;
 
 class ShitPlugin : public QxPlugin
 {
@@ -14,4 +15,8 @@ public:
     ~ShitPlugin(void) {}
 
     void initialize();
+    void uninitialize();
+
+private:
+    QWidget *m_widget;
 };

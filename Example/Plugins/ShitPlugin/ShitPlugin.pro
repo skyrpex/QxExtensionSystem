@@ -1,4 +1,4 @@
-QT       -= gui
+QT = core gui widgets
 
 TARGET = ShitPlugin
 TEMPLATE = lib
@@ -11,15 +11,6 @@ SOURCES += \
 
 HEADERS += \
     ShitPlugin.hpp
-
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
 
 OTHER_FILES += \
     specs.json
