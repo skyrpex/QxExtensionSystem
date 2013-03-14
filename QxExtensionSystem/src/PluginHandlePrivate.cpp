@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QRegExp>
 
 PluginHandlePrivate::PluginHandlePrivate()
 {
@@ -59,7 +60,7 @@ bool PluginHandlePrivate::isValidVersion(const QString &version)
     return versionRegExp().exactMatch(version);
 }
 
-int PluginSpecPrivate::versionCompare(const QString &version1, const QString &version2)
+int PluginHandlePrivate::versionCompare(const QString &version1, const QString &version2)
 {
     QRegExp reg1 = versionRegExp();
     QRegExp reg2 = versionRegExp();
