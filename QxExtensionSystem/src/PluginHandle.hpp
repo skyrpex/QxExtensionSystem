@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QPluginLoader>
 #include <QString>
 #include <QList>
 #include <QMap>
@@ -20,33 +19,29 @@ public:
     {
     }
 
-    bool operator==(const PluginDependency &other) const
-    {
-        return name == other.name && version == other.version;
-    }
-
     QString name;
     QString version;
 };
 
+class PluginDependency;
 class QxPlugin;
-class PluginHandle;
-typedef QList<PluginHandle *> PluginHandleList;
+class PluginHandlePrivate;
 
 class PluginHandle
 {
 public:
     PluginHandle();
     ~PluginHandle();
-    bool operator==(const PluginHandle &other) const;
 
     bool load(const QString &path);
     QxPlugin *plugin();
 
-    QString name;
-    QString version;
-    QList<PluginDependency> dependencies;
+    QString name() const;
+    QString version() const;
+    QList<PluginDependency> dependencies() const;
 
 private:
-    QPluginLoader m_loader;
+    PluginHandlePrivate *d;
 };
+
+typedef QList<PluginHandle *> PluginHandleList;

@@ -89,7 +89,7 @@ void QxPluginManagerPrivate::loadQueue()
 
 bool QxPluginManagerPrivate::dependencyCheck(PluginHandle *handle, const PluginHandleList &handles) const
 {
-    foreach(PluginDependency dependency, handle->dependencies) {
+    foreach(PluginDependency dependency, handle->dependencies()) {
         if(!dependencyCheck(dependency, handles)) {
             return false;
         }
@@ -100,7 +100,7 @@ bool QxPluginManagerPrivate::dependencyCheck(PluginHandle *handle, const PluginH
 bool QxPluginManagerPrivate::dependencyCheck(const PluginDependency &dependency, const PluginHandleList &handles) const
 {
     foreach(PluginHandle *handle, handles) {
-        if(handle->name == dependency.name && handle->version == dependency.version) {
+        if(handle->name() == dependency.name && handle->version() == dependency.version) {
             return true;
         }
     }

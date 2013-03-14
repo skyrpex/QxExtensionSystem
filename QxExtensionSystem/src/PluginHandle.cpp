@@ -1,55 +1,38 @@
 #include "PluginHandle.hpp"
 #include "QxPlugin.hpp"
-
-#include <QLibrary>
-#include <QPluginLoader>
-#include <QDebug>
-#include <QJsonObject>
-#include <QJsonArray>
+#include "PluginHandlePrivate.hpp"
 
 PluginHandle::PluginHandle()
+    : d(new PluginHandlePrivate)
 {
 }
 
 PluginHandle::~PluginHandle()
 {
-    m_loader.unload();
-}
-
-bool PluginHandle::operator ==(const PluginHandle &other) const
-{
-    return name == other.name && version == other.version;
+    delete d;
 }
 
 bool PluginHandle::load(const QString &path)
 {
-    // Check if it's a loadable library
-    if(!QLibrary::isLibrary(path)) {
-        return false;
-    }
-
-    // Setup the plugin loader
-    m_loader.setFileName(path);
-
-    // Load the plugin's meta data
-    QJsonObject specs = m_loader.metaData().value("MetaData").toObject();
-
-    name = specs.value("name").toString();
-
-    version = specs.value("version").toString();
-
-    QVariantList dependencyVariants = specs.value("dependencies").toArray().toVariantList();
-    foreach(QVariant dependencyVariant, dependencyVariants) {
-        QVariantMap map = dependencyVariant.toMap();
-        QString depName = map.value("name").toString();
-        QString depVersion = map.value("version").toString();
-        dependencies << PluginDependency(depName, depVersion);
-    }
-
-    return true;
+    return d->load(path);
 }
 
 QxPlugin *PluginHandle::plugin()
 {
-    return qobject_cast<QxPlugin *>(m_loader.instance());
+    return qobject_cast<QxPlugin *>(d->loader.instance());
+}
+
+QString PluginHandle::name() const
+{
+    return d->name;
+}
+
+QString PluginHandle::version() const
+{
+    return d->version;
+}
+
+QList<PluginDependency> PluginHandle::dependencies() const
+{
+    return d->dependencies;
 }

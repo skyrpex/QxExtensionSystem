@@ -4,6 +4,7 @@
 #include "PluginHandle.hpp"
 #include <QString>
 #include <QList>
+#include <QObject>
 
 class QxPluginManagerPrivate
 {

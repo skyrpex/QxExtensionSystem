@@ -13,7 +13,8 @@ SOURCES += \
     src/QxPluginManagerPrivate.cpp \
     src/PluginHandle.cpp \
     src/QxPluginPrivate.cpp \
-    src/QxPlugin.cpp
+    src/QxPlugin.cpp \
+    src/PluginHandlePrivate.cpp
 
 HEADERS  += \
     include/QxPlugin.hpp \
@@ -21,4 +22,5 @@ HEADERS  += \
     src/QxPluginManagerPrivate.hpp \
     src/PluginHandle.hpp \
     include/QxExtensionSystemGlobal.hpp \
-    src/QxPluginPrivate.hpp
+    src/QxPluginPrivate.hpp \
+    src/PluginHandlePrivate.hpp
