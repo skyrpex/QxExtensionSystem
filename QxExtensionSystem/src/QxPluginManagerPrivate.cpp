@@ -37,19 +37,26 @@ QList<QxPlugin *> QxPluginManagerPrivate::loadPlugins(const QString &path)
 
 void QxPluginManagerPrivate::unloadPlugins()
 {
+    // Uninitialize plugins
     foreach(QxPlugin *plugin, m_plugins) {
         plugin->uninitialize();
     }
 
-    if(!m_pool.isEmpty()) {
-        qWarning() << m_pool.count() << "object(s) left in the pool";
-    }
-
+    // Delete plugin handles
     qDeleteAll(m_handles);
     m_handles.clear();
     m_loadQueue.clear();
     m_noDependenciesQueue.clear();
     m_plugins.clear();
+
+    // Check for undeleted objects
+    if(!m_pool.isEmpty()) {
+        qWarning() << "Warning:" << m_pool.count() << "object(s) left in the pool";
+        foreach(QObject *object, m_pool) {
+            qWarning() << object->metaObject()->className() << object->objectName();
+        }
+        m_pool.clear();
+    }
 }
 
 void QxPluginManagerPrivate::loadHandles(const QString &path)
