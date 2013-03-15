@@ -2,7 +2,6 @@
 #define WIDGET_HPP
 
 #include <QWidget>
-#include <QxPluginManager.hpp>
 
 namespace Ui {
 class Widget;
@@ -23,7 +22,6 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    QxPluginManager m_manager;
 };
 
 #endif // WIDGET_HPP

@@ -11,12 +11,14 @@ class QXEXTENSIONSYSTEM_EXPORT QxPluginManager : public QObject
     Q_OBJECT
 
 public:
-    QxPluginManager();
-    ~QxPluginManager();
+    static QxPluginManager *instance();
 
     QxPluginList loadPlugins(const QString &path);
     void unloadPlugins();
 
 private:
+    QxPluginManager();
+    ~QxPluginManager();
+
     QxPluginManagerPrivate *d;
 };

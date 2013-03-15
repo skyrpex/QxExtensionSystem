@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QFileDialog>
+#include <QxPluginManager.hpp>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -37,7 +38,8 @@ void Widget::on_load_pressed()
 
     ui->listWidget->clear();
 
-    QList<QxPlugin *> plugins = m_manager.loadPlugins(path);
+    QxPluginManager *manager = QxPluginManager::instance();
+    QList<QxPlugin *> plugins = manager->loadPlugins(path);
     foreach(QxPlugin *plugin, plugins) {
         ui->listWidget->addItem(plugin->metaObject()->className());
     }

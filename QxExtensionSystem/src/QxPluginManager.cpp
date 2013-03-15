@@ -1,6 +1,12 @@
 #include "QxPluginManager.hpp"
 #include "QxPluginManagerPrivate.hpp"
 
+QxPluginManager *QxPluginManager::instance()
+{
+    static QxPluginManager *i = new QxPluginManager;
+    return i;
+}
+
 QxPluginManager::QxPluginManager()
     : d(new QxPluginManagerPrivate)
 {
