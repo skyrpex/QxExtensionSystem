@@ -61,11 +61,23 @@ void QxPluginManagerPrivate::unloadPlugins()
 
 void QxPluginManagerPrivate::loadHandles(const QString &path)
 {
+    // Fetch all possible plugin file paths. Discards duplicate plugins in Unix like
+    // lib.so.1, lib.so.1.0, lib.so.1.0.0
+    QStringList filePaths;
+    QStringList absoluteFilePaths;
     QList<QFileInfo> entryInfoList = QDir(path).entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
     foreach(QFileInfo info, entryInfoList) {
+        QString path = info.absolutePath() + info.baseName();
+        if(!filePaths.contains(path)) {
+            filePaths << path;
+            absoluteFilePaths << info.absoluteFilePath();
+        }
+    }
+
+    foreach(QString path, absoluteFilePaths) {
         PluginHandle *handle = new PluginHandle;
 
-        if(!handle->load(info.absoluteFilePath())) {
+        if(!handle->load(path)) {
             delete handle;
             continue;
         }
