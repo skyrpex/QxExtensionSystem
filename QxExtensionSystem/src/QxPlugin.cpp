@@ -27,3 +27,8 @@ void QxPlugin::removeObject(QObject *object)
 {
     d->pool->removeOne(object);
 }
+
+QObjectList QxPlugin::pool() const
+{
+    return *d->pool;
+}

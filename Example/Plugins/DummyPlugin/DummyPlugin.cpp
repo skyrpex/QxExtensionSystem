@@ -4,6 +4,8 @@
 
 void DummyPlugin::initialize()
 {
+    qDebug() << __FUNCTION__ << component<QWidget>();
+
     QWidget *widget = new QWidget;
     widget->show();
     addAutoReleasedObject(widget);
